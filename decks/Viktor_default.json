@@ -1,0 +1,232 @@
+{
+    "deck_name": "奥术先驱-维克托（预组）",
+    "legend": {
+        "num": 1,
+        "card_id": "ogn-265",
+        "card_name": "奥术先驱-维克托",
+        "color": [
+            "蓝色",
+            "黄色"
+        ],
+        "card_type": "传奇",
+        "legend_belongto": "维克托"
+    },
+    "runes": [
+        {
+            "num": 6,
+            "card_id": "ogn-089",
+            "card_name": "灵光符文",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "符文"
+        },
+        {
+            "num": 6,
+            "card_id": "ogn-214",
+            "card_name": "序理符文",
+            "color": [
+                "黄色"
+            ],
+            "card_type": "符文"
+        }
+    ],
+    "battlefield": [
+        {
+            "num": 1,
+            "card_id": "ogn-275",
+            "card_name": "团结圣坛",
+            "color": [],
+            "card_type": "战场"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-293",
+            "card_name": "宏伟广场",
+            "color": [],
+            "card_type": "战场"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-294",
+            "card_name": "崔法利兵营",
+            "color": [],
+            "card_type": "战场"
+        }
+    ],
+    "cards": [
+        {
+            "num": 1,
+            "card_id": "ogn-117",
+            "card_name": "维克托-创见先驱",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "英雄单位",
+            "legend_belongto": "维克托"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-111",
+            "card_name": "黑默丁格-发明家",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "英雄单位",
+            "legend_belongto": "黑墨丁格"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-118",
+            "card_name": "残响之魂",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-233",
+            "card_name": "宏伟战略",
+            "color": [
+                "黄色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-103",
+            "card_name": "拉文布鲁姆学生",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-222",
+            "card_name": "诺克萨斯鼓手",
+            "color": [
+                "黄色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-101",
+            "card_name": "蘑菇袋",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "装备"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-084",
+            "card_name": "踊跃的学徒",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-208",
+            "card_name": "冷血贵族",
+            "color": [
+                "黄色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-209",
+            "card_name": "清理门户",
+            "color": [
+                "黄色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-216",
+            "card_name": "侦察飞鹰",
+            "color": [
+                "黄色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-095",
+            "card_name": "“敲”诈",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-094",
+            "card_name": "精灵召唤",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-206",
+            "card_name": "背靠背",
+            "color": [
+                "黄色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-093",
+            "card_name": "烟幕弹",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-083",
+            "card_name": "借鉴历史",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-213",
+            "card_name": "暗刃",
+            "color": [
+                "黄色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-086",
+            "card_name": "宝石巨像",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-090",
+            "card_name": "懊悔法球",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "装备"
+        }
+    ]
+}

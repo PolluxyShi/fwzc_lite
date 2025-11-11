@@ -1,0 +1,223 @@
+{
+    "deck_name": "盲僧-李青（预组）",
+    "legend": {
+        "num": 1,
+        "card_id": "ogn-257",
+        "card_name": "盲僧-李青",
+        "color": [
+            "绿色",
+            "橙色"
+        ],
+        "card_type": "传奇",
+        "legend_belongto": "李青"
+    },
+    "runes": [
+        {
+            "num": 6,
+            "card_id": "ogn-042",
+            "card_name": "翠意符文",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "符文"
+        },
+        {
+            "num": 6,
+            "card_id": "ogn-126",
+            "card_name": "摧破符文",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "符文"
+        }
+    ],
+    "battlefield": [
+        {
+            "num": 1,
+            "card_id": "ogn-280",
+            "card_name": "帝柳之林",
+            "color": [],
+            "card_type": "战场"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-282",
+            "card_name": "希拉娜修道院",
+            "color": [],
+            "card_type": "战场"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-289",
+            "card_name": "巨神峰之巅",
+            "color": [],
+            "card_type": "战场"
+        }
+    ],
+    "cards": [
+        {
+            "num": 1,
+            "card_id": "ogn-151",
+            "card_name": "李青-不怒自威",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "英雄单位",
+            "legend_belongto": "李青"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-157",
+            "card_name": "乌迪尔-荒野化身",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "英雄单位",
+            "legend_belongto": "乌迪尔"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-152",
+            "card_name": "雾临剑冢",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "装备"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-147",
+            "card_name": "野爪萨满",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-065",
+            "card_name": "睿智长者",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-058",
+            "card_name": "训练有素",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-142",
+            "card_name": "山脉亚龙",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-060",
+            "card_name": "远见面具",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "装备"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-128",
+            "card_name": "决斗",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-052",
+            "card_name": "强强魄罗",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-136",
+            "card_name": "竞技场新人",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-132",
+            "card_name": "大副",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-055",
+            "card_name": "驭水者",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-125",
+            "card_name": "比尔吉沃特恶霸",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-137",
+            "card_name": "雷爪氏族熊人",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-053",
+            "card_name": "秘奥义！慈悲度魂落",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-135",
+            "card_name": "帕卡幼崽",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-043",
+            "card_name": "魅惑妖术",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "法术"
+        }
+    ]
+}

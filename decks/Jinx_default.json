@@ -1,0 +1,223 @@
+{
+    "deck_name": "暴走萝莉-金克丝（预组）",
+    "legend": {
+        "num": 1,
+        "card_id": "ogn-251",
+        "card_name": "暴走萝莉-金克丝",
+        "color": [
+            "红色",
+            "紫色"
+        ],
+        "card_type": "传奇",
+        "legend_belongto": "金克丝"
+    },
+    "runes": [
+        {
+            "num": 6,
+            "card_id": "ogn-007",
+            "card_name": "炽烈符文",
+            "color": [
+                "红色"
+            ],
+            "card_type": "符文"
+        },
+        {
+            "num": 6,
+            "card_id": "ogn-166",
+            "card_name": "混沌符文",
+            "color": [
+                "紫色"
+            ],
+            "card_type": "符文"
+        }
+    ],
+    "battlefield": [
+        {
+            "num": 1,
+            "card_id": "ogn-285",
+            "card_name": "劫掠船巷",
+            "color": [],
+            "card_type": "战场"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-289",
+            "card_name": "巨神峰之巅",
+            "color": [],
+            "card_type": "战场"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-298",
+            "card_name": "祖安地沟",
+            "color": [],
+            "card_type": "战场"
+        }
+    ],
+    "cards": [
+        {
+            "num": 1,
+            "card_id": "ogn-030",
+            "card_name": "金克丝-爆破狂人",
+            "color": [
+                "红色"
+            ],
+            "card_type": "英雄单位",
+            "legend_belongto": "金克丝"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-036",
+            "card_name": "蔚-铲除者",
+            "color": [
+                "红色"
+            ],
+            "card_type": "英雄单位",
+            "legend_belongto": "蔚"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-195",
+            "card_name": "裂魂者喇煞",
+            "color": [
+                "紫色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-019",
+            "card_name": "肆虐狂魂",
+            "color": [
+                "红色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-182",
+            "card_name": "废料堆",
+            "color": [
+                "紫色"
+            ],
+            "card_type": "装备"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-185",
+            "card_name": "旅行商人",
+            "color": [
+                "紫色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-024",
+            "card_name": "虚空索敌",
+            "color": [
+                "红色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-180",
+            "card_name": "逝水如镜",
+            "color": [
+                "紫色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-002",
+            "card_name": "粗鲁的海盗",
+            "color": [
+                "红色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-003",
+            "card_name": "炼金太保",
+            "color": [
+                "红色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-006",
+            "card_name": "嚼火者手雷",
+            "color": [
+                "红色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-168",
+            "card_name": "战或逃",
+            "color": [
+                "紫色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-169",
+            "card_name": "罡风",
+            "color": [
+                "紫色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-178",
+            "card_name": "卧底特工",
+            "color": [
+                "紫色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-165",
+            "card_name": "牧灵犬",
+            "color": [
+                "紫色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-008",
+            "card_name": "罪恶快感",
+            "color": [
+                "红色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-001",
+            "card_name": "灼焰飞龙",
+            "color": [
+                "红色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-011",
+            "card_name": "熔浆巨龙",
+            "color": [
+                "红色"
+            ],
+            "card_type": "单位"
+        }
+    ]
+}

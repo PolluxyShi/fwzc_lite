@@ -1,0 +1,809 @@
+/* ============================================
+   基础样式
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    height: 100vh;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.screen {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ============================================
+   游戏界面容器 - 16:9固定比例
+   ============================================ */
+#gameScreen {
+    /* 16:9比例：宽高比为16:9 */
+    aspect-ratio: 16 / 9;
+    width: min(100vw, calc(100vh * 16 / 9));
+    height: min(100vh, calc(100vw * 9 / 16));
+    max-width: 100vw;
+    max-height: 100vh;
+    
+    display: flex;
+    flex-direction: column;
+    padding: 1vh;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: visible; /* 改为visible，确保gap可见 */
+    position: relative; /* 确保子元素可以固定定位 */
+    box-sizing: border-box; /* 确保padding包含在总高度内 */
+}
+
+/* ============================================
+   纵向标签样式
+   ============================================ */
+.area-label-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-size: 1.2vh;
+    font-weight: bold;
+    color: #666;
+    padding: 0.5vh 0.3vh;
+    text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.area-label-vertical-small {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-size: 1vh;
+    font-weight: bold;
+    color: #999;
+    padding: 0.3vh 0.2vh;
+    text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* ============================================
+   通用行样式：所有行（除了按钮行和战场行）使用固定高度
+   计算：容器高度100%，减去padding(2vh)，减去gap总和，减去按钮行(5vh)，减去战场行额外高度，剩余除以其他行
+   使用calc()动态计算，确保gap能够正常显示
+   ============================================ */
+.top-row,
+.opponent-base-runes-row,
+.my-base-runes-row,
+.my-area-hand-row {
+    display: flex;
+    gap: 1vh; /* 统一的间隔距离 - 控制左右相邻区域的间距 */
+    width: 100%;
+    flex-shrink: 0;
+    height: 17%;
+    min-height: 0;
+    /* 确保行不会压缩gap */
+    align-items: stretch;
+    margin: 1vh 0;
+}
+
+/* ============================================
+   通用区域样式：所有白色圆角矩形区域 - 固定大小和位置
+   ============================================ */
+.opponent-area,
+.pending-spells-area,
+.opponent-base-standalone,
+.opponent-runes-standalone,
+.battlefield,
+.my-base-standalone,
+.my-runes-standalone,
+.my-area,
+.hand-area-standalone {
+    background: rgba(255,255,255,0.95);
+    padding: 0.5vh;
+    border-radius: 6px;
+    display: flex;
+    gap: 0.5vh;
+    align-items: stretch;
+    flex-shrink: 0;
+    width: calc(50% - 0.5vh); /* 固定宽度：50%减去一半的gap */
+    flex: 0 0 calc(50% - 0.5vh);
+    height: 100%; /* 填充父行的高度 */
+    overflow: hidden;
+    position: relative; /* 确保位置固定 */
+}
+
+/* ============================================
+   第一行：对手区域 + 待结算区域
+   ============================================ */
+.opponent-area-content {
+    display: flex;
+    gap: 0.5vh;
+    align-items: center;
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.pending-spells {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vh;
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: center;
+}
+
+/* ============================================
+   第二行：对方基地区域 + 对方符文区域
+   ============================================ */
+.opponent-base-standalone .opponent-base,
+.my-base-standalone .my-base {
+    flex: 1;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 0.5vh;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vh;
+    align-items: center;
+}
+
+/* 对方符文区域：横向排列，与其他卡牌放置区域一致 */
+.opponent-runes-standalone .opponent-runes {
+    flex: 1;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 0.5vh;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vh;
+    align-items: center;
+}
+
+/* ============================================
+   第三行：战场区域（战场1 + 战场2）- 高度更高以容纳战场名称和规则
+   ============================================ */
+.battlefields-area {
+    display: flex; /* 改为flex布局，与其他行一致 */
+    gap: 1vh;
+    width: 100%;
+    flex-shrink: 0;
+    /* 战场区域高度 = 其他行高度 + 额外高度(3vh) */
+    height: 20%;
+    min-height: 0;
+    align-items: stretch;
+}
+
+.battlefield-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vh;
+    overflow: hidden;
+}
+
+.battlefield-card-display {
+    height: 2.5vh; /* 固定高度 */
+    padding: 0.3vh;
+    /* border: 1px dashed #ccc; */
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1vh;
+    flex-shrink: 0;
+}
+
+.battlefield-units {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vh;
+    flex: 1;
+    overflow: hidden;
+}
+
+.units-group {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vh;
+    padding: 0.5vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: center;
+}
+
+.opponent-units {
+    background: #ffebee;
+}
+
+.my-units {
+    background: #e8f5e9;
+}
+
+/* ============================================
+   第四行：我方基地 + 我方符文
+   ============================================ */
+.my-base-standalone .my-base {
+    flex: 1;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* ============================================
+   第五行：我方区域 + 手牌
+   ============================================ */
+.my-area-content {
+    display: flex;
+    gap: 0.5vh;
+    align-items: center;
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* 我方符文区域：横向排列，与其他卡牌放置区域一致 */
+.my-runes-standalone .my-runes {
+    flex: 1;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 0.5vh;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vh;
+    align-items: center;
+}
+
+.my-hand {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: center;
+}
+
+/* ============================================
+   卡牌放置容器样式：灰色虚线边框，高度相同
+   ============================================ */
+.card-container {
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    height: 100%; /* 填充父容器高度，确保所有卡牌放置区域高度相同 */
+    padding: 0.5vh;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vh;
+    align-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    box-sizing: border-box;
+}
+
+/* ============================================
+   第六行：操作按钮区域 - 固定高度
+   ============================================ */
+.action-buttons {
+    display: flex;
+    gap: 0.5vh;
+    justify-content: center;
+    padding: 0.5vh;
+    flex-shrink: 0;
+    height: 5vh; /* 固定高度 */
+    min-height: 5vh;
+    max-height: 5vh;
+    align-items: center;
+}
+
+.action-buttons button {
+    padding: 0.6vh 1.2vh;
+    background: #667eea;
+    color: white;
+    border: none;
+    /* border-radius: 4px; */
+    cursor: pointer;
+    font-size: 1.2vh;
+}
+
+.action-buttons button:hover {
+    background: #5568d3;
+}
+
+/* ============================================
+   通用样式：玩家信息
+   ============================================ */
+.player-info {
+    min-width: 6vw;
+    flex-shrink: 0;
+}
+
+.player-info h3 {
+    margin-bottom: 0.2vh;
+    font-size: 1.3vh;
+}
+
+.score {
+    font-size: 1.2vh;
+    font-weight: bold;
+    margin: 0.2vh 0;
+}
+
+/* ============================================
+   通用样式：传奇、英雄、符文、基地区域
+   ============================================ */
+.opponent-legend, .my-legend,
+.opponent-hero, .my-hero {
+    min-width: 4vw;
+    min-height: 6vh;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 0.3vh;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3vh;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+/* 基地区域：横向排列，支持横向滚动 */
+.opponent-base, .my-base {
+    display: flex;
+    flex-direction: row;
+    gap: 0.3vh;
+    align-items: center;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    padding: 0.3vh;
+}
+
+/* ============================================
+   通用样式：牌堆信息
+   ============================================ */
+.opponent-deck-info, .my-deck-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2vh;
+    font-size: 1vh;
+    flex-shrink: 0;
+}
+
+.deck-top {
+    margin-top: 0.5vh;
+}
+
+/* ============================================
+   卡牌样式
+   ============================================ */
+.card {
+    /* 标准卡牌比例：80:112 = 5:7 ≈ 0.714 */
+    /* 使用固定宽度，高度按比例计算 */
+    width: 5vw;
+    height: calc(5vw * 1.4); /* 保持80:112的比例 */
+    border: 2px solid #333;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 0.9vh;
+    padding: 0.2vh;
+    text-align: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+/* 符文卡牌：与其他卡牌大小一致，保持正常比例 */
+.card.rune-card,
+.card.my-rune-card {
+    /* 标准卡牌比例：80:112 = 5:7 ≈ 0.714 */
+    /* 使用固定宽度，高度按比例计算，与其他卡牌一致 */
+    width: 5vw;
+    height: calc(5vw * 1.4); /* 保持80:112的比例 */
+    padding: 0.2vh;
+    font-size: 0.9vh;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.card:hover {
+    transform: scale(1.1);
+    z-index: 10;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.card.tapped {
+    /* 横置卡牌：仅变灰，不旋转 */
+    opacity: 0.7;
+    border-color: #999;
+}
+
+.card.tapped:hover {
+    /* 横置卡牌hover时，保持变灰但可以放大 */
+    opacity: 0.7;
+    transform: scale(1.1);
+}
+
+.card-back {
+    background: #667eea;
+    color: white;
+}
+
+.card-name {
+    font-weight: bold;
+    font-size: 0.8vh;
+    margin-bottom: 0.2vh;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.1vh;
+    z-index: 2;
+    position: relative;
+}
+
+.card-power {
+    position: absolute;
+    bottom: 0.3vh;
+    right: 0.3vh;
+    background: #333;
+    color: white;
+    width: 1.5vh;
+    height: 1.5vh;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1vh;
+    z-index: 3;
+}
+
+.card-modifiers {
+    position: absolute;
+    top: 0.2vh;
+    left: 0.2vh;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2vh;
+}
+
+.modifier {
+    font-size: 0.7vh;
+    padding: 0.1vh 0.3vh;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.modifier.positive {
+    background: green;
+    color: white;
+}
+
+.modifier.negative {
+    background: red;
+    color: white;
+}
+
+.modifier.yellow {
+    background: yellow;
+    color: black;
+}
+
+/* ============================================
+   模态框样式
+   ============================================ */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    overflow: auto;
+}
+
+/* 卡牌详情弹窗应该在废牌堆弹窗的上层 */
+#cardModal {
+    z-index: 2000;
+}
+
+/* 选择移动目的地的窗口应该在卡牌详情窗口的上层 */
+#areaSelectionModal {
+    z-index: 3000;
+}
+
+/* 是/否选择对话框也应该在卡牌详情窗口的上层 */
+#yesNoModal {
+    z-index: 3000;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 10px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: black;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* ============================================
+   按钮样式
+   ============================================ */
+button {
+    padding: 0.4vh 0.8vh;
+    margin: 0.2vh;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1vh;
+}
+
+button:hover {
+    background: #5568d3;
+}
+
+button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* ============================================
+   大厅界面
+   ============================================ */
+.lobby-container {
+    max-width: 800px;
+    margin: 50px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.lobby-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #667eea;
+}
+
+.lobby-actions {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.action-group {
+    flex: 1;
+    padding: 20px;
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+.action-group h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.action-group input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.action-group button {
+    width: 100%;
+    padding: 10px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.action-group button:hover {
+    background: #5568d3;
+}
+
+.room-info {
+    margin-top: 20px;
+    padding: 15px;
+    background: #e8f5e9;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* ============================================
+   卡组选择界面
+   ============================================ */
+.deck-selection-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+/* 自定义下拉列表样式 */
+.custom-select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.custom-select-trigger {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color 0.3s;
+}
+
+.custom-select-trigger:hover {
+    border-color: #667eea;
+}
+
+.custom-select.open .custom-select-trigger {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.custom-select-arrow {
+    font-size: 12px;
+    color: #666;
+    transition: transform 0.3s;
+}
+
+.custom-select.open .custom-select-arrow {
+    transform: rotate(180deg);
+}
+
+.custom-select-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid #667eea;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    max-height: 200px; /* 约5个选项的高度 */
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-select.open .custom-select-options {
+    display: block;
+}
+
+.custom-select-option {
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 16px;
+}
+
+.custom-select-option:hover {
+    background: #e3f2fd;
+}
+
+.custom-select-option.selected {
+    background: #667eea;
+    color: white;
+}
+
+/* 滚动条样式 */
+.custom-select-options {
+    scrollbar-width: thin;
+    scrollbar-color: #667eea #f0f0f0;
+}
+
+.custom-select-options::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-select-options::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+.custom-select-options::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 4px;
+}
+
+.custom-select-options::-webkit-scrollbar-thumb:hover {
+    background: #5568d3;
+}
+
+.card-selection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.card-selection .card {
+    cursor: pointer;
+}
+
+.card-selection .card.selected {
+    border-color: #667eea;
+    border-width: 3px;
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+}

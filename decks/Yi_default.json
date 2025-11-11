@@ -1,0 +1,184 @@
+{
+    "deck_name": "无极剑圣-易（预组）",
+    "legend": {
+        "num": 1,
+        "card_id": "ogs-019",
+        "card_name": "无极剑圣-易",
+        "color": [
+            "绿色",
+            "橙色"
+        ],
+        "card_type": "传奇",
+        "legend_belongto": "易"
+    },
+    "runes": [
+        {
+            "num": 6,
+            "card_id": "ogn-042",
+            "card_name": "翠意符文",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "符文"
+        },
+        {
+            "num": 6,
+            "card_id": "ogn-126",
+            "card_name": "摧破符文",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "符文"
+        }
+    ],
+    "battlefield": [
+        {
+            "num": 1,
+            "card_id": "ogn-279",
+            "card_name": "强化阵地",
+            "color": [],
+            "card_type": "战场"
+        }
+    ],
+    "cards": [
+        {
+            "num": 2,
+            "card_id": "ogs-004",
+            "card_name": "易-禅心大道",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "英雄单位",
+            "legend_belongto": "易"
+        },
+        {
+            "num": 2,
+            "card_id": "ogs-009",
+            "card_name": "易-锋芒毕现",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "英雄单位",
+            "legend_belongto": "易"
+        },
+        {
+            "num": 2,
+            "card_id": "ogs-020",
+            "card_name": "高原血统",
+            "color": [
+                "绿色",
+                "橙色"
+            ],
+            "card_type": "专属法术",
+            "legend_belongto": "易"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-052",
+            "card_name": "强强魄罗",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-055",
+            "card_name": "驭水者",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogs-005",
+            "card_name": "和风贤者",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-142",
+            "card_name": "山脉亚龙",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-049",
+            "card_name": "贪玩的小鬼",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-137",
+            "card_name": "雷爪氏族熊人",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-129",
+            "card_name": "迎敌号令",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-048",
+            "card_name": "冥想",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-134",
+            "card_name": "动员",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 3,
+            "card_id": "ogs-008",
+            "card_name": "绅士决斗",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-046",
+            "card_name": "决斗架势",
+            "color": [
+                "绿色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-127",
+            "card_name": "加农炮幕",
+            "color": [
+                "橙色"
+            ],
+            "card_type": "法术"
+        }
+    ]
+}
