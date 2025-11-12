@@ -5,6 +5,244 @@ let playerId = null;
 let roomId = null;
 let cardDatabase = {};
 
+// 拖拽配置
+const DROPPABLE_AREA_CONFIG = [
+    { elementId: 'myHand', area: 'hand' },
+    { elementId: 'myBase', area: 'base' },
+    { elementId: 'battlefield1-my', area: 'battlefield1' },
+    { elementId: 'battlefield2-my', area: 'battlefield2' },
+    { elementId: 'pendingSpells', area: 'pendingSpells' },
+    { elementId: 'myGraveyardArea', area: 'graveyard' }
+];
+const DRAGGABLE_AREAS = new Set(['hand', 'base', 'battlefield1', 'battlefield2', 'pendingSpells', 'hero', 'graveyard']);
+const SPELL_TYPES = ['法术', '专属法术'];
+let currentDragContext = null;
+
+function setupDroppableAreas() {
+    DROPPABLE_AREA_CONFIG.forEach(config => {
+        const element = document.getElementById(config.elementId);
+        if (!element || element.dataset.dropAreaInitialized === 'true') {
+            return;
+        }
+        element.dataset.dropArea = config.area;
+        element.dataset.dropAreaInitialized = 'true';
+        element.addEventListener('dragover', handleDragOver);
+        element.addEventListener('dragenter', handleDragEnter);
+        element.addEventListener('dragleave', handleDragLeave);
+        element.addEventListener('drop', handleDrop);
+    });
+}
+
+function normalizeAreaType(areaType = '') {
+    if (!areaType) return '';
+    if (areaType.startsWith('opponent-')) return '';
+    if (areaType === 'runeArea' || areaType === 'rune') return 'rune';
+    return areaType;
+}
+
+function isCardDraggable(areaType = '', card) {
+    const normalized = normalizeAreaType(areaType);
+    if (!normalized || !DRAGGABLE_AREAS.has(normalized)) {
+        return false;
+    }
+
+    // 对手卡牌不可拖动
+    if (areaType.startsWith && areaType.startsWith('opponent-')) {
+        return false;
+    }
+
+    // 待结算区域只允许拖动己方卡牌
+    if (normalized === 'pendingSpells' && card && card.playerId && playerId && card.playerId !== playerId) {
+        return false;
+    }
+
+    // 传奇/符文区域禁止拖动
+    if (normalized === 'legend' || normalized === 'rune') {
+        return false;
+    }
+
+    // 无实例ID的卡牌不可拖动
+    if (!card || !card.instanceId) {
+        return false;
+    }
+
+    return true;
+}
+
+function getCardDataForLogic(card) {
+    if (!card) return null;
+    const cardId = card.cardId || card.card_id;
+    if (!cardId) return card;
+    const lower = cardDatabase[cardId.toLowerCase()];
+    if (lower) return lower;
+    const upper = cardDatabase[cardId.toUpperCase()];
+    if (upper) return upper;
+    return card;
+}
+
+function getCardType(card) {
+    if (!card) return '';
+    if (card.cardType) return card.cardType;
+    if (card.card_type) return card.card_type;
+    if (card.type) return card.type;
+    const data = getCardDataForLogic(card);
+    if (data) {
+        return data.card_type || data.type || '';
+    }
+    return '';
+}
+
+function getAllowedDropAreas(fromArea, card) {
+    const cardType = getCardType(card) || '';
+    const isSpell = SPELL_TYPES.some(type => cardType.includes(type));
+    switch (fromArea) {
+        case 'hand':
+            return isSpell
+                ? ['battlefield1', 'battlefield2', 'base', 'pendingSpells', 'graveyard']
+                : ['battlefield1', 'battlefield2', 'base', 'graveyard'];
+        case 'base':
+            return ['battlefield1', 'battlefield2', 'hand', 'graveyard'];
+        case 'battlefield1':
+            return ['battlefield2', 'base', 'hand', 'graveyard'];
+        case 'battlefield2':
+            return ['battlefield1', 'base', 'hand', 'graveyard'];
+        case 'pendingSpells':
+            return ['hand', 'graveyard'];
+        case 'hero':
+            return ['base', 'battlefield1', 'battlefield2', 'graveyard'];
+        case 'graveyard':
+            return ['hand', 'base'];
+        default:
+            return [];
+    }
+}
+
+function highlightDropTargets() {
+    DROPPABLE_AREA_CONFIG.forEach(config => {
+        const element = document.getElementById(config.elementId);
+        if (!element) return;
+        element.classList.remove('drop-target-allowed');
+    });
+    if (!currentDragContext) return;
+    DROPPABLE_AREA_CONFIG.forEach(config => {
+        if (currentDragContext.allowedAreas.includes(config.area)) {
+            const element = document.getElementById(config.elementId);
+            if (element) {
+                element.classList.add('drop-target-allowed');
+            }
+        }
+    });
+}
+
+function clearDropHighlights() {
+    DROPPABLE_AREA_CONFIG.forEach(config => {
+        const element = document.getElementById(config.elementId);
+        if (!element) return;
+        element.classList.remove('drop-target-allowed');
+        element.classList.remove('drop-target-hover');
+    });
+}
+
+function clearDragState() {
+    clearDropHighlights();
+    currentDragContext = null;
+}
+
+function isDropAllowed(area) {
+    if (!currentDragContext) return false;
+    return currentDragContext.allowedAreas.includes(area);
+}
+
+function handleDragStart(event, card, fromArea) {
+    if (!card || !card.instanceId) {
+        event.preventDefault();
+        return;
+    }
+    const allowedAreas = getAllowedDropAreas(fromArea, card);
+    if (allowedAreas.length === 0) {
+        event.preventDefault();
+        showAutoCloseToast('该卡牌无法移动至其他区域', 1200);
+        return;
+    }
+    currentDragContext = {
+        cardInstanceId: card.instanceId,
+        fromArea,
+        card,
+        allowedAreas
+    };
+    if (event.dataTransfer) {
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('text/plain', card.instanceId);
+    }
+    highlightDropTargets();
+}
+
+function handleDragEnd() {
+    clearDragState();
+}
+
+function handleDragOver(event) {
+    if (!currentDragContext) return;
+    const dropArea = event.currentTarget.dataset.dropArea;
+    if (isDropAllowed(dropArea)) {
+        event.preventDefault();
+        if (event.dataTransfer) {
+            event.dataTransfer.dropEffect = 'move';
+        }
+    }
+}
+
+function handleDragEnter(event) {
+    if (!currentDragContext) return;
+    const dropArea = event.currentTarget.dataset.dropArea;
+    if (isDropAllowed(dropArea)) {
+        event.currentTarget.classList.add('drop-target-hover');
+    }
+}
+
+function handleDragLeave(event) {
+    event.currentTarget.classList.remove('drop-target-hover');
+}
+
+function handleDrop(event) {
+    if (!currentDragContext) return;
+    event.preventDefault();
+    const dropArea = event.currentTarget.dataset.dropArea;
+    if (!isDropAllowed(dropArea)) {
+        showAutoCloseToast('无法移动到该区域', 1200);
+        clearDragState();
+        return;
+    }
+    if (typeof window.moveCardToArea === 'function') {
+        window.moveCardToArea(
+            currentDragContext.cardInstanceId,
+            currentDragContext.fromArea,
+            dropArea,
+            {
+                closeCardModal: false,
+                onError: () => {
+                    showAutoCloseToast('无法移动到该区域', 1200);
+                }
+            }
+        );
+    } else {
+        console.error('moveCardToArea 未定义');
+        showAutoCloseToast('操作失败：缺少移动方法', 1500);
+    }
+    clearDragState();
+}
+
+function attachDragHandlers(element, card, areaType) {
+    if (!isCardDraggable(areaType, card)) {
+        return;
+    }
+    const fromArea = normalizeAreaType(areaType);
+    if (!fromArea) return;
+    element.setAttribute('draggable', 'true');
+    element.addEventListener('dragstart', (event) => handleDragStart(event, card, fromArea));
+    element.addEventListener('dragend', handleDragEnd);
+}
+
 // 调试模式相关
 let debugModeActive = false;
 let debugModeStep = 0; // 0: 等待卡组选择, 1: 等待英雄选择, 2: 等待战场选择, 3: 完成
@@ -59,8 +297,6 @@ function initializeEventListeners() {
     document.getElementById('shuffleRuneDeckBtn').addEventListener('click', () => sendAction('shuffleRuneDeck', {}));
     document.getElementById('increaseScoreBtn').addEventListener('click', () => sendAction('updateScore', { delta: 1 }));
     document.getElementById('decreaseScoreBtn').addEventListener('click', () => sendAction('updateScore', { delta: -1 }));
-    document.getElementById('viewGraveyardBtn').addEventListener('click', viewGraveyard);
-    document.getElementById('viewOpponentGraveyardBtn').addEventListener('click', viewOpponentGraveyard);
     document.getElementById('viewDeckTopBtn').addEventListener('click', viewDeckTop);
     document.getElementById('createTokenBtn').addEventListener('click', createToken);
     document.getElementById('untapAllBtn').addEventListener('click', untapAllCards);
@@ -99,6 +335,22 @@ function initializeEventListeners() {
             reloadCSS();
         }
     });
+
+    setupDroppableAreas();
+
+    const myGraveyardArea = document.getElementById('myGraveyardArea');
+    if (myGraveyardArea) {
+        myGraveyardArea.addEventListener('click', () => {
+            viewGraveyard();
+        });
+    }
+
+    const opponentGraveyardArea = document.getElementById('opponentGraveyardArea');
+    if (opponentGraveyardArea) {
+        opponentGraveyardArea.addEventListener('click', () => {
+            viewOpponentGraveyard();
+        });
+    }
 }
 
 // 显示自动关闭的提示消息
@@ -971,6 +1223,15 @@ function updateGameUI() {
     document.getElementById('opponentRuneDeckCount').textContent = opponent.runeDeckCount;
     document.getElementById('myGraveyardCount').textContent = me.graveyard.length;
     document.getElementById('opponentGraveyardCount').textContent = opponent.graveyard ? opponent.graveyard.length : 0;
+
+    const myGraveyardOverlay = document.getElementById('myGraveyardCountDisplay');
+    if (myGraveyardOverlay) {
+        myGraveyardOverlay.textContent = me.graveyard.length;
+    }
+    const opponentGraveyardOverlay = document.getElementById('opponentGraveyardCountDisplay');
+    if (opponentGraveyardOverlay) {
+        opponentGraveyardOverlay.textContent = opponent.graveyard ? opponent.graveyard.length : 0;
+    }
     
     // 更新传奇
     updateCardDisplay('myLegend', me.legend ? [me.legend] : [], 'legend');
@@ -1228,6 +1489,7 @@ function createCardElement(card, areaType = '', index = 0) {
         e.preventDefault();
         handleCardRightClick(card, areaType, index);
     });
+    attachDragHandlers(cardDiv, card, areaType);
     
     return cardDiv;
 }

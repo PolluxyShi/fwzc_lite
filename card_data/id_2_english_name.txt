@@ -175,6 +175,8 @@ ogn-157,Udyr, Wildman
 ogn-158,Volibear, Imposing
 ogn-158a,Volibear, Imposing(a)
 ogn-159,Warwick, Hunter
+ogn-160,Dazzling Aurora
+ogn-161,Deadbloom Predator
 ogn-162,Miss Fortune, Captain
 ogn-162a,Miss Fortune, Captain(a)
 ogn-163,Seal of Strength
@@ -349,27 +351,27 @@ ogn-309s,Bounty Hunter(s)
 ogn-310,The Boss(a)
 ogn-310s,The Boss(s)
 ogn-311,Buff
-ogs-001,Annie, FIERY
+ogs-001,Annie, Fiery
 ogs-002,Firestorm
 ogs-003,Incinerate
-ogs-004,Master Yi, MEDITATIVE
+ogs-004,Master Yi, Meditative
 ogs-005,Zephyr Sage
-ogs-006,Lux, ILLUMINATED
-ogs-007,Garen, RUGGED
+ogs-006,Lux, Illuminated
+ogs-007,Garen, Rugged
 ogs-008,Gentlemen's Duel
-ogs-009,Master Yi, HONED
-ogs-010,Annie, STUBBORN
+ogs-009,Yi, Honed
+ogs-010,Annie, Stubborn
 ogs-011,Flash
 ogs-012,Blast of Power
-ogs-013,Garen, COMMANDER
+ogs-013,Garen, Commander
 ogs-014,Lux, Crownguard
 ogs-015,Recruit the Vanguard
 ogs-016,Vanguard Attendant
-ogs-017,Dark Child
+ogs-017,Dark Child - Starter
 ogs-018,Tibbers
-ogs-019,Wuju Bladesman
+ogs-019,Wuju Bladesman - Starter
 ogs-020,Highlander
-ogs-021,Lady of Luminosity
+ogs-021,Lady of Luminosity - Starter
 ogs-022,Final Spark
-ogs-023,Might of Demacia
+ogs-023,Might of Demacia - Starter
 ogs-024,Decisive Strike

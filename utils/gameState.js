@@ -102,14 +102,40 @@ class GameState {
       });
     }
     
-    // 提取英雄单位（去重，只保留唯一的英雄）
+    // 统一处理所属传奇名称
+    const normalizeLegendName = (name) => {
+      if (!name || typeof name !== 'string') return '';
+      return name.trim().toLowerCase();
+    };
+    const deckLegendNameRaw = deckData.legend
+      ? (deckData.legend.legend_belongto ||
+         deckData.legend.legend ||
+         deckData.legend['所属传奇'] ||
+         (deckData.legend.card_name ? deckData.legend.card_name.split('-')[0] : ''))
+      : '';
+    const deckLegendName = normalizeLegendName(deckLegendNameRaw);
+
+    // 提取英雄单位（去重，只保留唯一的英雄，且匹配所属传奇）
     if (deckData.cards) {
       const heroIds = new Set();
       deckData.cards.forEach(cardData => {
         if (cardData.card_type === '英雄单位' && !heroIds.has(cardData.card_id)) {
+          const heroLegendNameRaw = cardData.legend_belongto || cardData.legend || cardData['所属传奇'] || '';
+          const heroLegendName = normalizeLegendName(heroLegendNameRaw);
+          
+          // 如果卡组传奇有明确归属，则只接受归属一致的英雄
+          if (deckLegendName && heroLegendName && deckLegendName !== heroLegendName) {
+            return;
+          }
+          
           heroIds.add(cardData.card_id);
           const card = createCardFromDeck(cardData, cardDatabase);
-          heroes.push({ ...card, instanceId: generateInstanceId() });
+          heroes.push({
+            ...card,
+            legend_belongto: heroLegendNameRaw || card.legend || card.legend_belongto || '',
+            legendBelongTo: heroLegendNameRaw || card.legend || card.legend_belongto || '',
+            instanceId: generateInstanceId()
+          });
         }
       });
     }
@@ -364,6 +390,11 @@ class GameState {
     const player = playerId === 'player1' ? this.player1 : this.player2;
     
     let card = null;
+    const isUnitCard = (cardObj) => {
+      if (!cardObj) return false;
+      const type = cardObj.cardType || cardObj.card_type || cardObj.type || '';
+      return typeof type === 'string' && type.includes('单位');
+    };
     
     // 从源区域移除
     switch (fromArea) {
@@ -422,6 +453,7 @@ class GameState {
     // 添加到目标区域
     switch (toArea) {
       case 'hand':
+        card.tapped = false;
         if (toIndex !== undefined) {
           player.hand.splice(toIndex, 0, card);
         } else {
@@ -471,6 +503,13 @@ class GameState {
         } else {
           card.visible = true;
         }
+
+        if (isUnitCard(card)) {
+          const shouldRemainUpright = fromArea === 'hand' && data.visibleToOpponent === false;
+          card.tapped = shouldRemainUpright ? false : true;
+        } else {
+          card.tapped = card.tapped || false;
+        }
         
         if (toIndex !== undefined) {
           units.splice(toIndex, 0, card);
@@ -481,6 +520,11 @@ class GameState {
       case 'base':
         // 移动到基地时默认正面朝上（visible = true）
         card.visible = true;
+        if (isUnitCard(card)) {
+          card.tapped = true;
+        } else {
+          card.tapped = card.tapped || false;
+        }
         if (toIndex !== undefined) {
           player.base.splice(toIndex, 0, card);
         } else {

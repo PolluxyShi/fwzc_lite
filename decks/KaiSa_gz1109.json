@@ -1,0 +1,207 @@
+{
+    "deck_name": "虚空之女-卡莎（广州-1109）",
+    "legend": {
+        "num": 1,
+        "card_id": "ogn-247",
+        "card_name": "虚空之女-卡莎",
+        "color": [
+            "红色",
+            "蓝色"
+        ],
+        "card_type": "传奇",
+        "legend_belongto": "卡莎"
+    },
+    "runes": [
+        {
+            "num": 5,
+            "card_id": "ogn-089",
+            "card_name": "灵光符文",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "符文"
+        },
+        {
+            "num": 7,
+            "card_id": "ogn-007",
+            "card_name": "炽烈符文",
+            "color": [
+                "红色"
+            ],
+            "card_type": "符文"
+        }
+    ],
+    "battlefield": [
+        {
+            "num": 1,
+            "card_id": "ogn-296",
+            "card_name": "虚空之门",
+            "color": [],
+            "card_type": "战场"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-292",
+            "card_name": "幻梦之树",
+            "color": [],
+            "card_type": "战场"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-288",
+            "card_name": "星尖峰",
+            "color": [],
+            "card_type": "战场"
+        }
+    ],
+    "cards": [
+        {
+            "num": 2,
+            "card_id": "ogn-039",
+            "card_name": "卡莎-九死一生",
+            "color": [
+                "红色"
+            ],
+            "card_type": "英雄单位",
+            "legend_belongto": "卡莎"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-027",
+            "card_name": "德莱厄斯-崔法利",
+            "color": [
+                "红色"
+            ],
+            "card_type": "英雄单位",
+            "legend_belongto": "德莱厄斯"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-013",
+            "card_name": "呸呸魄罗",
+            "color": [
+                "红色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-096",
+            "card_name": "警觉的哨兵",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-103",
+            "card_name": "拉文布鲁姆学生",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-087",
+            "card_name": "约德尔教官",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-012",
+            "card_name": "诺克萨斯新兵",
+            "color": [
+                "红色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-116",
+            "card_name": "千尾监视者",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "单位"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-248",
+            "card_name": "艾卡西亚暴雨",
+            "color": [
+                "红色",
+                "蓝色"
+            ],
+            "card_type": "专属法术",
+            "legend_belongto": "卡莎"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-009",
+            "card_name": "海克斯射线",
+            "color": [
+                "红色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-004",
+            "card_name": "顺劈",
+            "color": [
+                "红色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-095",
+            "card_name": "“敲”诈",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-104",
+            "card_name": "择日再战",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 1,
+            "card_id": "ogn-093",
+            "card_name": "烟幕弹",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 3,
+            "card_id": "ogn-029",
+            "card_name": "星落",
+            "color": [
+                "红色"
+            ],
+            "card_type": "法术"
+        },
+        {
+            "num": 2,
+            "card_id": "ogn-122",
+            "card_name": "时间扭曲",
+            "color": [
+                "蓝色"
+            ],
+            "card_type": "法术"
+        }
+    ]
+}

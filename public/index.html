@@ -101,13 +101,16 @@
                     <div class="opponent-legend" id="opponentLegend"></div>
                     <div class="area-label-vertical">选定英雄</div>
                     <div class="opponent-hero" id="opponentHero"></div>
+                    <div class="area-label-vertical">废牌堆</div>
+                    <div class="graveyard-display opponent-graveyard" id="opponentGraveyardArea">
+                        <img src="/card_data/images/back.png" alt="对手废牌堆">
+                        <div class="graveyard-count" id="opponentGraveyardCountDisplay">0</div>
+                    </div>
                     <div class="opponent-deck-info">
                         <div>手牌: <span id="opponentHandCount">0</span></div>
                         <div>主牌堆: <span id="opponentMainDeckCount">0</span></div>
                         <div>符文堆: <span id="opponentRuneDeckCount">0</span></div>
-                        <div>废牌堆: <span id="opponentGraveyardCount">0</span>
-                            <button id="viewOpponentGraveyardBtn" style="margin-left: 5px; padding: 5px 10px; font-size: 12px;">查看</button>
-                        </div>
+                        <div>废牌堆: <span id="opponentGraveyardCount">0</span></div>
                         <div class="deck-top" id="opponentDeckTop"></div>
                     </div>
                 </div>
@@ -188,6 +191,11 @@
                     <div class="my-legend" id="myLegend"></div>
                     <div class="area-label-vertical">选定英雄</div>
                     <div class="my-hero" id="myHero"></div>
+                    <div class="area-label-vertical">废牌堆</div>
+                    <div class="graveyard-display my-graveyard" id="myGraveyardArea">
+                        <img src="/card_data/images/back.png" alt="我方废牌堆">
+                        <div class="graveyard-count" id="myGraveyardCountDisplay">0</div>
+                    </div>
                     <div class="my-deck-info">
                         <div>手牌: <span id="myHandCount">0</span></div>
                         <div>主牌堆: <span id="myMainDeckCount">0</span> 
@@ -197,9 +205,7 @@
                         <div>符文堆: <span id="myRuneDeckCount">0</span>
                             <button id="drawRuneBtn">抽符文</button>
                         </div>
-                        <div>废牌堆: <span id="myGraveyardCount">0</span>
-                            <button id="viewGraveyardBtn">查看废牌堆</button>
-                        </div>
+                        <div>废牌堆: <span id="myGraveyardCount">0</span></div>
                     </div>
                 </div>
             </div>

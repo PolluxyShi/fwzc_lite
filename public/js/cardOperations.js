@@ -44,6 +44,70 @@ function showAreaSelectionModal(callback, title = '选择目标区域') {
     modal.style.display = 'block';
 }
 
+// 将卡牌移动到指定区域（可被拖拽或对话框调用）
+function moveCardToArea(cardInstanceId, fromArea, targetArea, options = {}) {
+    if (!cardInstanceId || !fromArea || !targetArea) {
+        if (typeof options.onError === 'function') {
+            options.onError('缺少必要的移动参数');
+        }
+        return;
+    }
+
+    const closeCardModal = options.closeCardModal !== false;
+    const onSuccess = typeof options.onSuccess === 'function' ? options.onSuccess : () => {};
+    const onError = typeof options.onError === 'function' ? options.onError : () => {};
+
+    // 同区域移动无需处理
+    if (fromArea === targetArea) {
+        onError('目标区域与原区域相同');
+        return;
+    }
+
+    const isMovingToBattlefield = targetArea === 'battlefield1' || targetArea === 'battlefield2';
+    const sendMove = (visibleToOpponent) => {
+        if (typeof window.sendAction === 'function') {
+            console.log('调用 sendAction:', 'moveCard', { cardInstanceId, fromArea, toArea: targetArea, visibleToOpponent });
+            window.sendAction('moveCard', {
+                cardInstanceId,
+                fromArea,
+                toArea: targetArea,
+                visibleToOpponent
+            });
+            if (closeCardModal) {
+                const modal = document.getElementById('cardModal');
+                if (modal) {
+                    modal.style.display = 'none';
+                }
+            }
+            onSuccess();
+        } else {
+            console.error('sendAction 函数未定义，请确保 game.js 已加载');
+            alert('操作失败：sendAction 函数未定义');
+            onError('sendAction 未定义');
+        }
+    };
+
+    // 默认可见性
+    let visible = true;
+
+    if (fromArea === 'hand' && isMovingToBattlefield) {
+        // 从手牌移动到战场需要确认是否公开
+        showYesNoModal('是否向对方展示？', (result) => {
+            visible = result;
+            sendMove(visible);
+        });
+        return;
+    }
+
+    if (fromArea === 'hand' && targetArea === 'base') {
+        visible = true;
+    } else if (targetArea === 'hand') {
+        visible = false;
+    }
+
+    sendMove(visible);
+}
+
 // 移动卡牌（包括打出手牌）
 function moveCard(cardInstanceId, fromArea) {
     console.log('moveCard 被调用:', cardInstanceId, fromArea);
@@ -62,62 +126,9 @@ function moveCard(cardInstanceId, fromArea) {
     }
     
     showAreaSelectionModal((targetArea) => {
-        console.log('选择了目标区域:', targetArea);
-        
-        // 从手牌移动到基地：默认正面朝上，无需询问
-        // 从手牌移动到战场：询问是否向对方展示
-        let visible = true; // 默认对方可见
-        const isMovingToBattlefield = targetArea === 'battlefield1' || targetArea === 'battlefield2';
-        
-        if (fromArea === 'hand' && isMovingToBattlefield) {
-            // 从手牌移动到战场时询问是否向对方展示
-            showYesNoModal('是否向对方展示？', (result) => {
-                visible = result;
-                // 统一使用 moveCard 操作
-                if (typeof window.sendAction === 'function') {
-                    console.log('调用 sendAction:', 'moveCard', { cardInstanceId, fromArea, toArea: targetArea, visibleToOpponent: visible });
-                    window.sendAction('moveCard', {
-                        cardInstanceId: cardInstanceId,
-                        fromArea: fromArea,
-                        toArea: targetArea,
-                        visibleToOpponent: visible
-                    });
-                } else {
-                    console.error('sendAction 函数未定义，请确保 game.js 已加载');
-                    alert('操作失败：sendAction 函数未定义');
-                }
-                
-                const modal = document.getElementById('cardModal');
-                if (modal) {
-                    modal.style.display = 'none';
-                }
-            });
-            return; // 等待用户选择后再继续
-        } else if (fromArea === 'hand' && targetArea === 'base') {
-            // 从手牌移动到基地：默认正面朝上（visible = true），无需询问
-            visible = true;
-        } else if (targetArea === 'hand') {
-            visible = false; // 手牌不需要可见性设置
-        }
-        
-        // 统一使用 moveCard 操作
-        if (typeof window.sendAction === 'function') {
-            console.log('调用 sendAction:', 'moveCard', { cardInstanceId, fromArea, toArea: targetArea, visibleToOpponent: visible });
-            window.sendAction('moveCard', {
-                cardInstanceId: cardInstanceId,
-                fromArea: fromArea,
-                toArea: targetArea,
-                visibleToOpponent: visible
-            });
-        } else {
-            console.error('sendAction 函数未定义，请确保 game.js 已加载');
-            alert('操作失败：sendAction 函数未定义');
-        }
-        
-        const modal = document.getElementById('cardModal');
-        if (modal) {
-            modal.style.display = 'none';
-        }
+        moveCardToArea(cardInstanceId, fromArea, targetArea, {
+            closeCardModal: true
+        });
     }, '选择目标区域');
 }
 
@@ -289,6 +300,7 @@ function showYesNoModal(message, callback) {
 
 // 暴露到全局作用域
 window.moveCard = moveCard;
+window.moveCardToArea = moveCardToArea;
 window.playCard = playCard;
 window.discardCard = discardCard;
 window.tapCard = tapCard;
