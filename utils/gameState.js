@@ -257,6 +257,8 @@ class GameState {
           // 召出符文卡牌时令其处于竖置状态
           rune.tapped = false;
           player.runeArea.push(rune);
+          // TODO：重排
+          this.sortRuneArea(playerId)
         }
         break;
         
@@ -618,6 +620,11 @@ class GameState {
     const card = this.findCard(playerId, cardInstanceId, area);
     if (card) {
       card.tapped = true;
+      // TODO：重排
+      const card_type = card.cardType || card.card_type || card.type || '';
+      if (typeof card_type === 'string' && card_type === "符文"){
+        this.sortRuneArea(playerId)
+      }
     } else {
       throw new Error('卡牌未找到');
     }
@@ -628,6 +635,11 @@ class GameState {
     const card = this.findCard(playerId, cardInstanceId, area);
     if (card) {
       card.tapped = false;
+      // TODO：重排
+      const card_type = card.cardType || card.card_type || card.type || '';
+      if (typeof card_type === 'string' && card_type === "符文"){
+        this.sortRuneArea(playerId)
+      }
     } else {
       throw new Error('卡牌未找到');
     }
@@ -666,6 +678,8 @@ class GameState {
         card.tapped = false;
       }
     });
+    // TODO:重排
+    this.sortRuneArea(playerId)
     
     // 竖置战场中的所有横置卡牌
     this.battlefields.forEach(battlefield => {
@@ -833,6 +847,47 @@ class GameState {
       // 如果没有指定目标区域，添加到手牌
       player.hand.push(token);
     }
+  }
+
+  sortRuneArea(playerId) {
+    const player = playerId === 'player1' ? this.player1 : this.player2;
+
+    // 定义颜色排序顺序
+    const colorOrder = {
+        '红色': 1,
+        '蓝色': 2,
+        '绿色': 3,
+        '黄色': 4,
+        '橙色': 5,
+        '紫色': 6,
+        '无色': 7
+    };
+    
+    // 获取卡牌的第一个颜色用于排序
+    const getCardColorOrder = (card) => {
+        // const cardData = cardDatabase[card.cardId] || card;
+        const colors = card.color || [];
+        if (colors.length === 0) return 999; // 没有颜色的排在最后
+        const firstColor = colors[0];
+        return colorOrder[firstColor] || 999;
+    };
+    
+    player.runeArea.sort((a, b) => {
+        // 首先按横竖状态排序：竖置的（tapped=false）排在前面，横置的（tapped=true）排在后面
+        if (a.tapped !== b.tapped) {
+            return a.tapped ? 1 : -1;
+        }
+        
+        // 横竖状态一致时，按颜色排序
+        const colorOrderA = getCardColorOrder(a);
+        const colorOrderB = getCardColorOrder(b);
+        if (colorOrderA !== colorOrderB) {
+            return colorOrderA - colorOrderB;
+        }
+        
+        // 颜色也一致时，保持原有顺序
+        return 0;
+    });
   }
   
   getStateForPlayer(playerId) {

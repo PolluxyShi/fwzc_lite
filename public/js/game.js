@@ -1339,49 +1339,7 @@ function updateCardDisplay(containerId, cards, areaType = '') {
     // 如果容器ID以 'opponent' 开头，则在 areaType 前加上 'opponent-' 前缀
     const finalAreaType = containerId.startsWith('opponent') ? `opponent-${areaType}` : areaType;
     
-    // 如果是符文区域，对卡牌进行排序：横置的排在竖置的后面，横竖状态一致时按颜色排序
-    const isRuneArea = areaType === 'rune' || areaType === 'runeArea';
-    let sortedCards = cards;
-    if (isRuneArea) {
-        // 定义颜色排序顺序
-        const colorOrder = {
-            '红色': 1,
-            '蓝色': 2,
-            '绿色': 3,
-            '黄色': 4,
-            '橙色': 5,
-            '紫色': 6,
-            '无色': 7
-        };
-        
-        // 获取卡牌的第一个颜色用于排序
-        const getCardColorOrder = (card) => {
-            const cardData = cardDatabase[card.cardId] || card;
-            const colors = cardData.color || card.color || [];
-            if (colors.length === 0) return 999; // 没有颜色的排在最后
-            const firstColor = colors[0];
-            return colorOrder[firstColor] || 999;
-        };
-        
-        sortedCards = [...cards].sort((a, b) => {
-            // 首先按横竖状态排序：竖置的（tapped=false）排在前面，横置的（tapped=true）排在后面
-            if (a.tapped !== b.tapped) {
-                return a.tapped ? 1 : -1;
-            }
-            
-            // 横竖状态一致时，按颜色排序
-            const colorOrderA = getCardColorOrder(a);
-            const colorOrderB = getCardColorOrder(b);
-            if (colorOrderA !== colorOrderB) {
-                return colorOrderA - colorOrderB;
-            }
-            
-            // 颜色也一致时，保持原有顺序
-            return 0;
-        });
-    }
-    
-    sortedCards.forEach((card, index) => {
+    cards.forEach((card, index) => {
         const cardElement = createCardElement(card, finalAreaType, index);
         container.appendChild(cardElement);
     });
